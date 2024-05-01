@@ -1,0 +1,30 @@
+{
+  "name": "ng-pokemon-app-back-end",
+  "version": "1.0.0",
+  "description": "This project is a REST-API for my previous front-end pokemon app that manage CRUD and acces",
+  "main": "app.js",
+  "scripts": {
+    "start": "nodemon app.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/maliklafia-dev/pokemon-app-back-end.git"
+  },
+  "keywords": [
+    "pokemon-app-back-end"
+  ],
+  "author": "Malik LAFIA",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/maliklafia-dev/pokemon-app-back-end/issues"
+  },
+  "homepage": "https://github.com/maliklafia-dev/pokemon-app-back-end#readme",
+  "dependencies": {
+    "express": "^4.19.2",
+    "serve-favicon": "^2.5.0"
+  },
+  "devDependencies": {
+    "morgan": "^1.10.0",
+    "nodemon": "^3.1.0"
+  }
+}
