@@ -6,8 +6,29 @@ const { success } = require("./helper");
 const { getUniqueId } = require("./helper");
 let pokemons = require("./mock-pokemon");
 
+//Connection à la bd
+const { Sequelize } = require("sequelize");
+
 const app = express();
 const port = 3000;
+
+const sequelize = new Sequelize("pokedex", "root", "", {
+  host: "localhost",
+  dialect: "mariadb",
+  dialectOptions: {
+    timezone: "Etc/GMT-2",
+  },
+  loggin: false,
+});
+
+sequelize
+  .authenticate()
+  .then((_) =>
+    console.log("La connexion à la base de données a bien été établie.")
+  )
+  .catch((error) =>
+    console.error(`Impossible de se conecter à la base de données ${error}`)
+  );
 
 app
   .use(favicon(__dirname + "/favicon.ico"))
