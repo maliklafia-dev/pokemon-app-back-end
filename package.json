@@ -20,6 +20,7 @@
   },
   "homepage": "https://github.com/maliklafia-dev/pokemon-app-back-end#readme",
   "dependencies": {
+    "body-parser": "^1.20.2",
     "express": "^4.19.2",
     "serve-favicon": "^2.5.0"
   },
