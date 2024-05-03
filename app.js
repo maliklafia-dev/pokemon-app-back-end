@@ -5,13 +5,14 @@ const bodyParser = require("body-parser");
 const { success } = require("./helper");
 const { getUniqueId } = require("./helper");
 let pokemons = require("./mock-pokemon");
-
+const pokemonModel = require("./src/models/pokemon");
 //Connection à la bd
-const { Sequelize } = require("sequelize");
+const { Sequelize, DataTypes } = require("sequelize");
 
 const app = express();
 const port = 3000;
 
+//Configuration de la bd
 const sequelize = new Sequelize("pokedex", "root", "", {
   host: "localhost",
   dialect: "mariadb",
@@ -30,11 +31,29 @@ sequelize
     console.error(`Impossible de se conecter à la base de données ${error}`)
   );
 
+//synchronisation à la bd
+const Pokemon = pokemonModel(sequelize, DataTypes);
+
+sequelize.sync({ force: true }).then((_) => {
+  console.log('La base de données "Pokedex a bien été synchronisée"');
+  pokemons.map((pokemon) => {
+    Pokemon.create({
+      name: pokemon.name,
+      hp: pokemon.hp,
+      cp: pokemon.cp,
+      picture: pokemon.picture,
+      types: pokemon.types.join(),
+    }).then((bulbizarre) => console.log(bulbizarre.toJSON()));
+  });
+});
+
+//middlewares
 app
   .use(favicon(__dirname + "/favicon.ico"))
   .use(morgan("dev"))
   .use(bodyParser.json());
 
+//end Points
 app.get("/", (req, res) => res.send("Hello, Express 2 again !"));
 
 app.get("/api/pokemons/:id", (req, res) => {
