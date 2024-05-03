@@ -3,6 +3,10 @@ const morgan = require("morgan");
 const favicon = require("serve-favicon");
 const bodyParser = require("body-parser");
 const sequelize = require("./src/db/sequelize");
+const findAllPokemons = require("./src/routes/findAllPokemons");
+const findPokemonByPk = require("./src/routes/findPokemonByPk");
+//const updatePokemon = require("./src/routes/updatePokemon");
+//const deletePokemon = require("./src/routes/deletePokemon");
 
 //Initialisation du serveur.
 const app = express();
@@ -18,6 +22,11 @@ app
 sequelize.initDb();
 
 //End Points
+require("./src/routes/findAllPokemons")(app); // get sur /api/pokemons
+require("./src/routes/findPokemonByPk")(app); // get sur /api/pokeon/:id
+require("./src/routes/createPokemon")(app); // post sur /api/pokemons
+require("./src/routes/updatePokemon")(app); // put sur /api/pokemons/:id
+require("./src/routes/deletePokemon")(app); // delete sur /api/pokemon/:id
 
 app.listen(port, () =>
   console.log(
