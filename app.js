@@ -28,6 +28,13 @@ require("./src/routes/createPokemon")(app); // post sur /api/pokemons
 require("./src/routes/updatePokemon")(app); // put sur /api/pokemons/:id
 require("./src/routes/deletePokemon")(app); // delete sur /api/pokemon/:id
 
+//On ajoute la gestion des erreurs 404
+app.use(({ res }) => {
+  const message =
+    "Impossible de trouver la ressource demandée, veuillez réessayer une autre URL.";
+  res.status(404).json({ message });
+});
+
 app.listen(port, () =>
   console.log(
     `Notre application Node est démarré sur : http://localhost:${port}`
