@@ -1,0 +1,37 @@
+/* L’API Rest et la Base de données : Créer un modèle Sequelize */
+const { Sequelize, DataTypes } = require("sequelize");
+const PokemonModel = require("../models/pokemon");
+const pokemons = require("./mock-pokemon");
+
+//Connexion à la bd
+const sequelize = new Sequelize("pokedex", "root", "", {
+  host: "localhost",
+  dialect: "mariadb",
+  dialectOptions: {
+    timezone: "Etc/GMT-2",
+  },
+  logging: false,
+});
+
+const Pokemon = PokemonModel(sequelize, DataTypes);
+
+//remplisage de la base de donnée par les 12 pokemons
+const initDb = () => {
+  return sequelize.sync({ force: true }).then((_) => {
+    pokemons.map((pokemon) => {
+      Pokemon.create({
+        name: pokemon.name,
+        hp: pokemon.hp,
+        cp: pokemon.cp,
+        picture: pokemon.picture,
+        types: pokemon.types.join(),
+      }).then((pokemon) => console.log(pokemon.toJSON()));
+    });
+    console.log("La base de donnée a bien été initialisée !");
+  });
+};
+
+module.exports = {
+  initDb,
+  Pokemon,
+};
